@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debouncing Example</title>
+</head>
+<body>
+  <h2>Debouncing Example: Add Two Numbers</h2>
+  <input id="num1" type="number" placeholder="Enter first number">
+  <input id="num2" type="number" placeholder="Enter second number">
+  <p>Result: <span id="result">0</span></p>
+
+  <script>
+    // Debounce function
+    function debounce(func, delay) {
+      let timer;
+      return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+      };
+    }
+
+    // Function to calculate and display the sum
+    function calculateSum() {
+      const num1 = parseFloat(document.getElementById('num1').value) || 0;
+      const num2 = parseFloat(document.getElementById('num2').value) || 0;
+      document.getElementById('result').textContent = num1 + num2;
+    }
+
+    // Debounced version of calculateSum
+    const debouncedCalculateSum = debounce(calculateSum, 1000);
+
+    // Attach input event listeners
+    document.getElementById('num1').addEventListener('input', debouncedCalculateSum);
+    document.getElementById('num2').addEventListener('input', debouncedCalculateSum);
+  </script>
+</body>
+</html>
